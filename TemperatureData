@@ -1,0 +1,36 @@
+import TemperatureUnit
+import InstrumentData
+
+class TemperatureData(InstrumentData):
+  
+  def __init__(self, value, unit):
+    self.value = value
+    self.unit = unit
+  
+  def convert_temperature(t_unit_final, t_unit_initial = self.unit, t_initial = self.value):
+  
+    # Celsius to Fahrenheit -> Tf = (Tc * 1.8) + 32
+    if (t_unit_initial == TemperatureUnit.c and t_unit_final == TemperatureUnit.f):
+      t_final = (t_initial * 1.8) + 32
+    
+    # Fahrenheit to Celsius -> Tc = (Tf - 32)/1.8
+    if (t_unit_initial == TemperatureUnit.f and t_unit_final == TemperatureUnit.c):
+      t_final = (t_initial - 32) / 1.8
+  
+    # Celsius to Kelvin -> Tk = Tc + 273
+    if (t_unit_initial == TemperatureUnit.c and t_unit_final == TemperatureUnit.k):
+      t_final = t_initial + 273
+      
+    # Kelvin to Celsius -> Tc = Tk - 273
+    if (t_unit_initial == TemperatureUnit.k and t_unit_final == TemperatureUnit.c):
+      t_final = t_initial - 273
+       
+    # Fahrenheit to Kelvin -> Tk = Tc + 273 = ((Tf - 32)/1.8) - 273
+    if (t_unit_initial == TemperatureUnit.f and t_unit_final == TemperatureUnit.k):
+      t_final = ((t_initial - 32) / 1.8) + 273
+    
+    # Kelvin to Fahrenheit -> Tf = ((Tc * 1.8) + 32) = ((Tk - 273)*1.8) + 32
+    if (t_unit_initial == TemperatureUnit.k and t_unit_final == TemperatureUnit.f):
+      t_final = ((t_initial - 273)*1.8) + 32
+    
+    return t_final
